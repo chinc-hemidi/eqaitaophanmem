@@ -6,11 +6,11 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
       MYSQL_DATABASE: ${DB_NAME:-emotion_checkin}
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${DB_PASSWORD:-root}"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-uroot', '-p${DB_PASSWORD:-root}']
       interval: 10s
       timeout: 5s
       retries: 10
@@ -39,7 +39,7 @@ services:
       mysql:
         condition: service_healthy
     ports:
-      - "3009:3009"
+      - '3009:3009'
 
 volumes:
   mysql_data:

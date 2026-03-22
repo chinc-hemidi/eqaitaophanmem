@@ -1,4 +1,4 @@
-﻿# API Overview
+# API Overview
 
 ## Public
 - `GET /api/public/checkins/points/:pointCode`

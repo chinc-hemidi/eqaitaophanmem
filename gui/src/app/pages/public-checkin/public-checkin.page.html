@@ -1,37 +1,74 @@
-﻿<section class="checkin-page" *ngIf="!loading(); else loadingBlock">
-  <h1>{{ pointName() }}</h1>
-  <p class="subtitle">Chọn nhanh trạng thái cảm xúc của bạn hôm nay.</p>
+<section class="checkin-page" *ngIf="!loading(); else loadingBlock">
+  <article class="welcome-card" *ngIf="stage() === 'welcome' || alreadyCheckedIn()">
+    <p class="day-label">{{ dayLabel }}</p>
 
-  <div class="emotion-grid">
-    <app-emotion-tile
-      *ngFor="let emotion of emotionZones()"
-      [label]="emotion.name"
-      [color]="emotion.color"
-      [selected]="selectedEmotionCode() === emotion.code"
-      (choose)="chooseEmotion(emotion.code)"
-    />
-  </div>
+    <h1 class="welcome-title">
+      <span>{{ greetingTitle() }},</span>
+      <em>bạn thân mến</em>
+      <span class="flower" aria-hidden="true">🌸</span>
+    </h1>
 
-  <label>
-    Ghi chú (tuỳ chọn)
-    <textarea
-      [ngModel]="note()"
-      (ngModelChange)="note.set($event)"
-      rows="3"
-      maxlength="500"
-      placeholder="Bạn muốn chia sẻ thêm điều gì?"
-    ></textarea>
-  </label>
+    <p class="session-hint">{{ sessionHint() }}</p>
+    <p class="subtitle">{{ greetingSubtitle() }}</p>
 
-  <p *ngIf="errorMessage()" class="error">{{ errorMessage() }}</p>
+    <div class="heart" aria-hidden="true">♥</div>
 
-  <button type="button" [disabled]="!canSubmit()" (click)="onSubmit()">
-    {{ submitting() ? 'Đang gửi...' : 'Gửi check-in' }}
-  </button>
+    <button *ngIf="!alreadyCheckedIn()" type="button" class="primary-btn" (click)="startCheckin()">
+      Ghi nhận cảm xúc ngay →
+    </button>
+
+    <p class="checked-advice" *ngIf="alreadyCheckedIn() && checkedAdvice() as advice">{{ advice }}</p>
+
+    <p class="status-pill" [class.checked]="alreadyCheckedIn()">
+      <span class="dot"></span>
+      {{ statusLabel() }}
+    </p>
+  </article>
+
+  <article class="form-panel" *ngIf="stage() === 'checkin' && !alreadyCheckedIn()">
+    <p class="form-eyebrow">CHECK-IN CẢM XÚC</p>
+    <h2>Hôm nay bạn đang cảm thấy thế nào?</h2>
+    <p class="form-subtitle">Chỉ cần một cái chạm - không cần hoàn hảo.</p>
+
+    <div class="emotion-grid">
+      <app-emotion-tile
+        *ngFor="let emotion of emotionZones()"
+        [code]="emotion.code"
+        [title]="emotion.toneLabel"
+        [subtitle]="emotion.name"
+        [color]="emotion.color"
+        [icon]="emotion.icon"
+        [selected]="selectedEmotionCode() === emotion.code"
+        (choose)="chooseEmotion(emotion.code)"
+      />
+    </div>
+
+    <label>
+      GHI CHÚ (TÙY CHỌN)
+      <textarea
+        [ngModel]="note()"
+        (ngModelChange)="note.set($event)"
+        rows="3"
+        maxlength="500"
+        placeholder="Bạn muốn chia sẻ thêm điều gì?"
+      ></textarea>
+    </label>
+
+    <p *ngIf="errorMessage()" class="error">{{ errorMessage() }}</p>
+
+    <button type="button" class="primary-btn submit-btn" [disabled]="!canSubmit()" (click)="onSubmit()">
+      {{ submitLabel() }}
+    </button>
+
+    <button type="button" class="ghost-btn" (click)="backToWelcome()">Quay lại màn chào</button>
+  </article>
 </section>
 
 <ng-template #loadingBlock>
   <section class="checkin-page">
-    <p>Đang tải điểm check-in...</p>
+    <article class="welcome-card">
+      <h1 class="welcome-title"><span>Đang tải điểm check-in...</span></h1>
+      <p class="subtitle">Hệ thống đang chuẩn bị giao diện cảm xúc cho bạn.</p>
+    </article>
   </section>
 </ng-template>

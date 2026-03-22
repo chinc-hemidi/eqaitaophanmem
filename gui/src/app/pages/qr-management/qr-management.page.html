@@ -1,4 +1,4 @@
-﻿<section class="qr-page">
+<section class="qr-page">
   <h1>Quản lý QR check-in</h1>
 
   <article class="panel create">
@@ -66,5 +66,6 @@
   <article class="panel" *ngIf="qrPreview() as qr">
     <h2>QR preview</h2>
     <img [src]="qr" alt="QR preview" />
+    <p class="qr-link" *ngIf="qrTargetUrl() as link">{{ link }}</p>
   </article>
 </section>

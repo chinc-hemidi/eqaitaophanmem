@@ -47,7 +47,13 @@
       <h2>Tỷ lệ cảm xúc</h2>
       <article *ngFor="let emotion of summary.emotions; trackBy: trackByEmotionCode">
         <div class="row">
-          <strong>{{ emotion.name }}</strong>
+          <div class="emotion-meta">
+            <span class="emotion-icon" aria-hidden="true">{{ emotionUi(emotion.code).icon }}</span>
+            <div class="emotion-copy">
+              <strong>{{ emotionUi(emotion.code).label }}</strong>
+              <small>{{ emotion.name }}</small>
+            </div>
+          </div>
           <span>{{ emotion.count }} lượt ({{ emotion.percentage }}%)</span>
         </div>
         <div class="bar-track">

@@ -1,4 +1,4 @@
-﻿import { IsEnum, IsHexColor, IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator';
+import { IsEnum, IsHexColor, IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator';
 
 import { EmotionCode } from '@/common/enums/emotion-code.enum';
 

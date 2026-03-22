@@ -1,4 +1,4 @@
-﻿import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { SystemController } from './controllers/system.controller';
 import { SystemService } from './services/system.service';

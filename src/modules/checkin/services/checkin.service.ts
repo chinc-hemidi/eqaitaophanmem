@@ -1,4 +1,4 @@
-﻿import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { randomUUID } from 'node:crypto';
@@ -12,9 +12,17 @@ import { CheckinPointEntity } from '../entities/checkin-point.entity';
 import { EmotionCheckinEntity } from '../entities/emotion-checkin.entity';
 import { CreateCheckinDto } from '../dto/create-checkin.dto';
 import { CreateCheckinPointDto } from '../dto/create-checkin-point.dto';
+import { EmotionAdviceService } from './emotion-advice.service';
 
 interface CheckinContext {
   clientHash: string;
+}
+
+interface PublicCheckinTodayStatus {
+  checkedIn: boolean;
+  emotionName: string | null;
+  advice: string | null;
+  checkedAt: Date | null;
 }
 
 @Injectable()
@@ -27,6 +35,7 @@ export class CheckinService {
     @InjectRepository(EmotionZoneEntity)
     private readonly emotionZoneRepository: Repository<EmotionZoneEntity>,
     private readonly configService: ConfigService,
+    private readonly emotionAdviceService: EmotionAdviceService,
   ) {}
 
   async createPoint(dto: CreateCheckinPointDto): Promise<CheckinPointEntity> {
@@ -60,23 +69,71 @@ export class CheckinService {
     return this.checkinPointRepository.save(point);
   }
 
-  async getPublicPointMetadata(pointCode: string): Promise<{
+  async getPublicPointMetadata(pointCode: string, request: Request): Promise<{
     point: CheckinPointEntity;
     emotionZones: EmotionZoneEntity[];
+    todayCheckin: PublicCheckinTodayStatus;
   }> {
     const point = await this.findActivePointByCode(pointCode);
     const emotionZones = await this.emotionZoneRepository.find({
       where: { isActive: true },
       order: { sortOrder: 'ASC', id: 'ASC' },
     });
+    const context = this.getCheckinContext(request);
+    const checkinDate = new Date().toISOString().slice(0, 10);
 
-    return { point, emotionZones };
+    const todayCheckin = await this.emotionCheckinRepository.findOne({
+      where: {
+        checkinPointId: point.id,
+        clientHash: context.clientHash,
+        createdDate: checkinDate,
+      },
+      relations: { emotionZone: true },
+      order: { createdAt: 'DESC' },
+    });
+
+    if (!todayCheckin) {
+      return {
+        point,
+        emotionZones,
+        todayCheckin: {
+          checkedIn: false,
+          emotionName: null,
+          advice: null,
+          checkedAt: null,
+        },
+      };
+    }
+
+    const fallbackAdvice = this.createFallbackAdvices(todayCheckin.emotionZone.name)[0];
+    const [advice] = await this.emotionAdviceService.getRandomByEmotionZoneId(
+      todayCheckin.emotionZoneId,
+      1,
+    );
+
+    return {
+      point,
+      emotionZones,
+      todayCheckin: {
+        checkedIn: true,
+        emotionName: todayCheckin.emotionZone.name,
+        advice: advice ?? fallbackAdvice,
+        checkedAt: todayCheckin.createdAt,
+      },
+    };
   }
 
   async submitCheckin(
     dto: CreateCheckinDto,
     request: Request,
-  ): Promise<{ id: number; createdAt: Date }> {
+  ): Promise<{
+    id: number;
+    createdAt: Date;
+    emotionCode: EmotionCode;
+    emotionName: string;
+    advice: string;
+    advices: string[];
+  }> {
     const point = await this.findActivePointByCode(dto.checkinPointCode);
     const emotion = await this.emotionZoneRepository.findOne({
       where: { code: dto.emotionZoneCode as EmotionCode, isActive: true },
@@ -112,7 +169,17 @@ export class CheckinService {
     });
 
     const saved = await this.emotionCheckinRepository.save(entity);
-    return { id: saved.id, createdAt: saved.createdAt };
+    const randomAdvices = await this.emotionAdviceService.getRandomByEmotionZoneId(emotion.id, 2);
+    const advices = this.ensureTwoAdvices(randomAdvices, emotion.name);
+
+    return {
+      id: saved.id,
+      createdAt: saved.createdAt,
+      emotionCode: emotion.code,
+      emotionName: emotion.name,
+      advice: advices[0],
+      advices,
+    };
   }
 
   private async findActivePointByCode(code: string): Promise<CheckinPointEntity> {
@@ -153,5 +220,27 @@ export class CheckinService {
       .replace(/[^A-Z0-9]/g, '')
       .slice(0, 8);
     return `${prefix || 'POINT'}-${randomUUID().slice(0, 8)}`;
+  }
+
+  private createFallbackAdvices(emotionName: string): [string, string] {
+    return [
+      `Bạn đang cảm thấy ${emotionName.toLowerCase()} hôm nay. Hãy trọn vẹn với cảm xúc này nhé.`,
+      'Dành một nhịp thở sâu và một chút nghỉ ngắn để cơ thể, tâm trí cân bằng lại.',
+    ];
+  }
+
+  private ensureTwoAdvices(source: string[], emotionName: string): [string, string] {
+    const unique = Array.from(new Set(source.map((item) => item.trim()).filter(Boolean)));
+    const fallback = this.createFallbackAdvices(emotionName);
+
+    if (unique.length === 0) {
+      return fallback;
+    }
+
+    if (unique.length === 1) {
+      return [unique[0], fallback[1]];
+    }
+
+    return [unique[0], unique[1]];
   }
 }

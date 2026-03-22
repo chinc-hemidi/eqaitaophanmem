@@ -1,13 +1,10 @@
-﻿<div class="app-shell">
-  <header class="topbar">
-    <a routerLink="/dashboard" class="brand" aria-label="HMD Emotion Check-in">HMD</a>
-    <nav>
+<div class="app-shell">
+  <main>
+    <nav class="simple-nav" *ngIf="shellUiService.showQuickNav()">
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/qr-management" routerLinkActive="active">QR</a>
     </nav>
-  </header>
 
-  <main>
     <router-outlet />
   </main>
 </div>

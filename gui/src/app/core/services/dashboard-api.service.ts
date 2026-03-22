@@ -1,4 +1,4 @@
-﻿import { Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { map } from 'rxjs';
 
 import { adaptDashboardSummary } from '../../api/adapters/dashboard.adapter';

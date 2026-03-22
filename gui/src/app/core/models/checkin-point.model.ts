@@ -1,4 +1,4 @@
-﻿export interface CheckinPoint {
+export interface CheckinPoint {
   id: number;
   code: string;
   name: string;

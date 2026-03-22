@@ -1,19 +1,126 @@
-﻿@use '../../../styles/variables' as *;
+@use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
 .thank-you {
   @include card-base;
-  max-width: 580px;
-  margin: 28px auto;
-  padding: 22px;
+  max-width: 620px;
+  margin: 24px auto;
+  padding: 26px 22px 22px;
   display: grid;
   gap: 12px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 50%),
+    linear-gradient(180deg, #fffefe 0%, #f7f1f1 100%);
+  border-radius: 6px;
+  border: 1px solid rgba(140, 0, 1, 0.08);
 
-  a {
-    width: fit-content;
-    padding: 10px 14px;
-    background: $color-accent;
-    color: #fff;
-    border-radius: 6px;
+  h1 {
+    margin: 0;
+    font-family: $font-display;
+    font-size: clamp(1.8rem, 3.2vw, 2.2rem);
+    line-height: 1.2;
+    color: rgba(123, 62, 64, 0.95);
+  }
+}
+
+.hero-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.lead {
+  margin: 0 auto;
+  max-width: 500px;
+  font-size: 1.03rem;
+  line-height: 1.58;
+  color: rgba(66, 49, 49, 0.82);
+}
+
+.advice-box {
+  margin-top: 4px;
+  border: 1px solid var(--accent-soft);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  strong {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 1.02rem;
+    color: color-mix(in srgb, var(--accent-color) 78%, #3d2020);
+  }
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--accent-color);
+}
+
+.quote {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.68;
+  color: rgba(73, 52, 52, 0.84);
+  font-style: italic;
+}
+
+.actions {
+  margin-top: 6px;
+}
+
+.back-link {
+  display: block;
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--accent-color) 64%, #ffffff);
+  background: #fff;
+  color: color-mix(in srgb, var(--accent-color) 76%, #3d2020);
+  border-radius: 6px;
+  padding: 11px 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.back-link:hover {
+  background: color-mix(in srgb, var(--accent-soft) 35%, #fff);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .thank-you {
+    padding: 20px 12px 14px;
+    border-radius: 4px;
+
+    h1 {
+      font-size: clamp(1.48rem, 7vw, 1.84rem);
+    }
+  }
+
+  .lead {
+    font-size: 0.95rem;
+  }
+
+  .advice-box {
+    padding: 12px;
+    border-radius: 4px;
+  }
+
+  .back-link {
+    border-radius: 4px;
+    font-size: 0.95rem;
   }
 }

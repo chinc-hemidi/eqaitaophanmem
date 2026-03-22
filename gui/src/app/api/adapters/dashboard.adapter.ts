@@ -1,4 +1,4 @@
-﻿export interface DashboardEmotionVM {
+export interface DashboardEmotionVM {
   code: string;
   name: string;
   color: string;

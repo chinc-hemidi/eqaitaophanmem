@@ -1,4 +1,4 @@
-﻿export interface DashboardSummary {
+export interface DashboardSummary {
   totalCheckins: number;
   emotions: Array<{
     code: string;

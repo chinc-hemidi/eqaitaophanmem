@@ -1,4 +1,4 @@
-﻿import { Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { map } from 'rxjs';
 
 import { ApiHttpClient } from '../../api/http-client';
@@ -12,6 +12,21 @@ interface PublicPointMetadata {
     description: string | null;
   };
   emotionZones: EmotionZone[];
+  todayCheckin: {
+    checkedIn: boolean;
+    emotionName: string | null;
+    advice: string | null;
+    checkedAt: string | null;
+  };
+}
+
+export interface CheckinSubmitResult {
+  id: number;
+  createdAt: string;
+  emotionCode: string;
+  emotionName: string;
+  advice: string;
+  advices: string[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,6 +40,8 @@ export class CheckinApiService {
   }
 
   submitCheckin(payload: { checkinPointCode: string; emotionZoneCode: string; note?: string }) {
-    return this.httpClient.post<{ id: number; createdAt: string }>(API_ENDPOINTS.submitCheckin, payload);
+    return this.httpClient
+      .post<CheckinSubmitResult>(API_ENDPOINTS.submitCheckin, payload)
+      .pipe(map((response) => response.data));
   }
 }

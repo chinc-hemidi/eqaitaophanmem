@@ -1,4 +1,4 @@
-﻿# Ý Tưởng UX/UI - Emotion Check-in System
+# Ý Tưởng UX/UI - Emotion Check-in System
 
 ## 1. Design direction
 - Phong cách: tối giản, thân thiện, giàu cảm xúc nhưng không nặng nề.

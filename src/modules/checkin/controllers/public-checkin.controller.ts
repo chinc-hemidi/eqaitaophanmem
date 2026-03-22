@@ -1,4 +1,4 @@
-﻿import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import type { Request } from 'express';
 
 import { CreateCheckinDto } from '../dto/create-checkin.dto';
@@ -9,8 +9,8 @@ export class PublicCheckinController {
   constructor(private readonly checkinService: CheckinService) {}
 
   @Get('points/:pointCode')
-  getPointMetadata(@Param('pointCode') pointCode: string) {
-    return this.checkinService.getPublicPointMetadata(pointCode);
+  getPointMetadata(@Param('pointCode') pointCode: string, @Req() request: Request) {
+    return this.checkinService.getPublicPointMetadata(pointCode, request);
   }
 
   @Post('submit')

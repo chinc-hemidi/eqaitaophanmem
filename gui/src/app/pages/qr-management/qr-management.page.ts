@@ -1,4 +1,4 @@
-﻿import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -19,6 +19,7 @@ export class QrManagementPageComponent {
   readonly name = signal('');
   readonly description = signal('');
   readonly qrPreview = signal<string | null>(null);
+  readonly qrTargetUrl = signal<string | null>(null);
   readonly errorMessage = signal<string | null>(null);
 
   constructor() {
@@ -61,7 +62,10 @@ export class QrManagementPageComponent {
 
   generateQr(point: CheckinPoint) {
     this.adminApiService.generateQr(point.code).subscribe({
-      next: (qr) => this.qrPreview.set(qr.qrDataUrl),
+      next: (qr) => {
+        this.qrPreview.set(qr.qrDataUrl);
+        this.qrTargetUrl.set(qr.url);
+      },
       error: (error: Error) => this.errorMessage.set(error.message),
     });
   }

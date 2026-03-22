@@ -1,4 +1,4 @@
-﻿# Phân Tích Luồng Brief v1
+# Phân Tích Luồng Brief v1
 
 ## 1. Tóm tắt mục tiêu
 - Mục tiêu MVP: cho phép người dùng quét QR để check-in cảm xúc nhanh, không cần đăng nhập.

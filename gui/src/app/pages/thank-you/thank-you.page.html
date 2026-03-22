@@ -1,5 +1,24 @@
-﻿<section class="thank-you">
-  <h1>Cảm ơn bạn đã check-in</h1>
-  <p>Thông tin đã được ghi nhận để cải thiện môi trường làm việc mỗi ngày.</p>
-  <a routerLink="/dashboard">Xem dashboard</a>
+<section
+  class="thank-you"
+  [style.--accent-color]="tone().accent"
+  [style.--accent-soft]="tone().accentSoft"
+>
+  <div class="hero-icon" aria-hidden="true">{{ tone().icon }}</div>
+
+  <h1>{{ tone().title }}</h1>
+  <p class="lead">{{ tone().subtitle }}</p>
+
+  <article class="advice-box">
+    <header>
+      <span class="dot" aria-hidden="true"></span>
+      <strong>{{ tone().label }}</strong>
+    </header>
+
+    <p class="quote">“{{ advices()[0] }}”</p>
+    <p class="quote">“{{ advices()[1] }}”</p>
+  </article>
+
+  <div class="actions" *ngIf="pointCode()">
+    <a [routerLink]="['/checkin', pointCode()]" class="back-link">← Quay lại màn chào</a>
+  </div>
 </section>

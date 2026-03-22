@@ -1,4 +1,4 @@
-﻿import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { CheckinModule } from '@/modules/checkin/checkin.module';
 import { DashboardController } from './controllers/dashboard.controller';

@@ -1,4 +1,4 @@
-﻿import * as Joi from 'joi';
+import * as Joi from 'joi';
 
 interface EnvVars {
   NODE_ENV: 'development' | 'production' | 'test';

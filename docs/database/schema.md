@@ -1,4 +1,4 @@
-﻿# Database Schema (MVP)
+# Database Schema (MVP)
 
 ## emotion_zones
 - id (PK)

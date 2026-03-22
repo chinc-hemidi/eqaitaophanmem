@@ -1,4 +1,4 @@
-﻿@use '../../../styles/variables' as *;
+@use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
 .qr-page {
@@ -81,6 +81,13 @@ textarea {
 
 img {
   width: min(280px, 100%);
+}
+
+.qr-link {
+  margin: 0;
+  font-size: 0.76rem;
+  color: rgba(47, 10, 10, 0.85);
+  word-break: break-all;
 }
 
 .error {

@@ -1,10 +1,13 @@
-﻿import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 
 function extractErrorMessage(error: HttpErrorResponse): string {
   const payload = error.error;
 
   if (typeof payload === 'string' && payload.trim()) {
+    if (payload.includes('ERR_NGROK_6024')) {
+      return 'Ngrok free đang chặn request API. Vui lòng mở link bằng trình duyệt ngoài hoặc cấu hình tunnel không có trang cảnh báo.';
+    }
     return payload;
   }
 

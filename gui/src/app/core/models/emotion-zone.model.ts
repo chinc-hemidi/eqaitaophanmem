@@ -1,4 +1,4 @@
-﻿export interface EmotionZone {
+export interface EmotionZone {
   id: number;
   code: string;
   name: string;

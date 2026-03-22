@@ -1,4 +1,4 @@
-﻿export const API_ENDPOINTS = {
+export const API_ENDPOINTS = {
   publicCheckinPoint: (pointCode: string) => `/public/checkins/points/${pointCode}`,
   submitCheckin: '/public/checkins/submit',
   dashboardSummary: '/admin/dashboard/summary',

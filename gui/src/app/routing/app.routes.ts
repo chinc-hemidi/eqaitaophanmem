@@ -1,4 +1,4 @@
-﻿import { Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { DashboardPageComponent } from '../pages/dashboard/dashboard.page';
 import { NotFoundPageComponent } from '../pages/not-found/not-found.page';

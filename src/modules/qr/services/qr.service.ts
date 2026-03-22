@@ -1,4 +1,4 @@
-﻿import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as QRCode from 'qrcode';
@@ -20,7 +20,10 @@ export class QrService {
       throw new NotFoundException('Check-in point not found');
     }
 
-    const guiBaseUrl = this.configService.get<string>('app.guiBaseUrl', 'http://localhost:3009');
+    const guiBaseUrl = this.normalizeBaseUrl(
+      this.configService.get<string>('app.guiBaseUrl', 'http://localhost:3009'),
+    );
+
     const url = `${guiBaseUrl}/checkin/${point.code}`;
     const qrDataUrl = await QRCode.toDataURL(url, {
       errorCorrectionLevel: 'M',
@@ -32,5 +35,9 @@ export class QrService {
     await this.checkinPointRepository.save(point);
 
     return { pointCode: point.code, url, qrDataUrl };
+  }
+
+  private normalizeBaseUrl(value: string): string {
+    return value.trim().replace(/\/+$/, '');
   }
 }

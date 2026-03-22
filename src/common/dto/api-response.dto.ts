@@ -1,4 +1,4 @@
-﻿export interface ApiResponseDto<T> {
+export interface ApiResponseDto<T> {
   success: boolean;
   timestamp: string;
   data: T;
