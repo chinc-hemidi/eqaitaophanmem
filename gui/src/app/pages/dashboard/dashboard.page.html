@@ -1,0 +1,73 @@
+﻿<section class="dashboard-page">
+  <header>
+    <h1>Dashboard cảm xúc</h1>
+    <p>Theo dõi tỷ lệ cảm xúc và xu hướng check-in theo ngày.</p>
+  </header>
+
+  <div class="filters">
+    <label>
+      Từ ngày
+      <input type="date" [value]="from()" (change)="from.set($any($event.target).value)" />
+    </label>
+    <label>
+      Đến ngày
+      <input type="date" [value]="to()" (change)="to.set($any($event.target).value)" />
+    </label>
+    <button
+      type="button"
+      class="icon-btn"
+      (click)="loadSummary()"
+      title="Lọc dữ liệu"
+      aria-label="Lọc dữ liệu"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M3 5h18v2l-7 7v5l-4 2v-7L3 7z"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <p *ngIf="state.errorMessage()" class="error">{{ state.errorMessage() }}</p>
+
+  <ng-container *ngIf="state.summary() as summary">
+    <div class="overview-grid">
+      <app-stat-card title="Tổng check-in" [value]="summary.totalCheckins" />
+      <app-stat-card
+        title="Emotion dẫn đầu"
+        [value]="summary.emotions.length ? summary.emotions[0].name : 'N/A'"
+      />
+    </div>
+
+    <section class="emotion-breakdown">
+      <h2>Tỷ lệ cảm xúc</h2>
+      <article *ngFor="let emotion of summary.emotions; trackBy: trackByEmotionCode">
+        <div class="row">
+          <strong>{{ emotion.name }}</strong>
+          <span>{{ emotion.count }} lượt ({{ emotion.percentage }}%)</span>
+        </div>
+        <div class="bar-track">
+          <div
+            class="bar-fill"
+            [style.width.%]="emotion.percentage"
+            [style.background]="emotion.color"
+          ></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="daily-trend">
+      <h2>Xu hướng theo ngày</h2>
+      <div class="trend-list">
+        <div *ngFor="let item of summary.dailyTrend">
+          <span>{{ item.date }}</span>
+          <strong>{{ item.count }}</strong>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</section>

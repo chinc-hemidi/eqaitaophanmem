@@ -1,0 +1,30 @@
+﻿@use '../../../styles/mixins' as *;
+
+.stats-page {
+  display: grid;
+  gap: 16px;
+}
+
+.panel {
+  @include card-base;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+  }
+
+  p {
+    margin: 3px 0 0;
+    opacity: 0.75;
+  }
+}

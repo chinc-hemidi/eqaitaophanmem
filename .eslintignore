@@ -1,0 +1,6 @@
+﻿node_modules
+dist
+coverage
+gui/node_modules
+gui/dist
+public/gui

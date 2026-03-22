@@ -1,0 +1,45 @@
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_NAME:-emotion_checkin}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${DB_PASSWORD:-root}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      DB_NAME: ${DB_NAME:-emotion_checkin}
+      DB_SYNC: ${DB_SYNC:-true}
+      DB_LOGGING: ${DB_LOGGING:-false}
+      PORT: ${PORT:-3009}
+      APP_URL: ${APP_URL:-http://localhost:3009}
+      GUI_BASE_URL: ${GUI_BASE_URL:-http://localhost:3009}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+      CHECKIN_LIMIT_PER_DAY: ${CHECKIN_LIMIT_PER_DAY:-true}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "3009:3009"
+
+volumes:
+  mysql_data:

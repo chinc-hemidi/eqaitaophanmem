@@ -1,0 +1,12 @@
+<svg width="420" height="120" viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">HMD Logo</title>
+  <desc id="desc">Stylized red HMD logo with e swoosh.</desc>
+
+  <g fill="none" stroke="#8c0001" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M76 22c-26 0-47 18-47 41 0 14 8 27 21 35" />
+    <path d="M34 96c16 14 46 16 70 4" />
+    <path d="M12 95c20-26 58-33 93-15" />
+  </g>
+
+  <text x="132" y="86" fill="#8c0001" font-size="78" font-family="Arial Black, Arial, sans-serif" font-weight="900" letter-spacing="1">HMD</text>
+</svg>

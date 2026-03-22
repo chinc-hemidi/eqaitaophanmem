@@ -1,0 +1,70 @@
+﻿@use '../styles/variables' as *;
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  gap: $space-4;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px $space-5;
+  backdrop-filter: blur(10px);
+  background: rgba(248, 236, 236, 0.85);
+  border-bottom: 1px solid rgba(47, 10, 10, 0.12);
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(47, 10, 10, 0.14);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: $font-display;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: $color-accent;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  nav {
+    display: flex;
+    gap: $space-3;
+  }
+
+  a {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: $radius-md;
+  }
+
+  a.active {
+    background: $color-accent;
+    color: white;
+  }
+}
+
+main {
+  padding: $space-4;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+@media (max-width: 720px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+
+    nav {
+      width: 100%;
+      overflow-x: auto;
+    }
+  }
+}

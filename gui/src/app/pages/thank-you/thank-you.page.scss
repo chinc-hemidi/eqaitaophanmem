@@ -1,0 +1,19 @@
+﻿@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.thank-you {
+  @include card-base;
+  max-width: 580px;
+  margin: 28px auto;
+  padding: 22px;
+  display: grid;
+  gap: 12px;
+
+  a {
+    width: fit-content;
+    padding: 10px 14px;
+    background: $color-accent;
+    color: #fff;
+    border-radius: 6px;
+  }
+}

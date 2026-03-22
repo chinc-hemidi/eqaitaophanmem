@@ -1,0 +1,19 @@
+﻿@use '../../../../styles/variables' as *;
+
+.card {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(47, 10, 10, 0.1);
+  background: $color-card;
+
+  p {
+    margin: 0 0 6px;
+    opacity: 0.75;
+    font-size: 0.85rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+}

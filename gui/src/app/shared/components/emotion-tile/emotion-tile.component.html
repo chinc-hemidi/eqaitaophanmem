@@ -1,0 +1,10 @@
+﻿<button
+  type="button"
+  class="emotion-tile"
+  [class.selected]="selected()"
+  [style.--emotion-color]="color()"
+  (click)="choose.emit()"
+>
+  <span class="dot"></span>
+  <span>{{ label() }}</span>
+</button>

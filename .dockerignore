@@ -1,0 +1,11 @@
+﻿node_modules
+dist
+coverage
+gui/node_modules
+gui/dist
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+*.log
+.env

@@ -1,0 +1,25 @@
+﻿.emotion-tile {
+  width: 100%;
+  border: 2px solid rgba(47, 10, 10, 0.2);
+  border-radius: 8px;
+  padding: 14px 12px;
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+
+  .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: var(--emotion-color);
+    flex-shrink: 0;
+  }
+}
+
+.emotion-tile.selected {
+  border-color: var(--emotion-color);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--emotion-color) 28%, transparent);
+}

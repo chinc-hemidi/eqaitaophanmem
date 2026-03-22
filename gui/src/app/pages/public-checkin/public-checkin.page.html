@@ -1,0 +1,37 @@
+﻿<section class="checkin-page" *ngIf="!loading(); else loadingBlock">
+  <h1>{{ pointName() }}</h1>
+  <p class="subtitle">Chọn nhanh trạng thái cảm xúc của bạn hôm nay.</p>
+
+  <div class="emotion-grid">
+    <app-emotion-tile
+      *ngFor="let emotion of emotionZones()"
+      [label]="emotion.name"
+      [color]="emotion.color"
+      [selected]="selectedEmotionCode() === emotion.code"
+      (choose)="chooseEmotion(emotion.code)"
+    />
+  </div>
+
+  <label>
+    Ghi chú (tuỳ chọn)
+    <textarea
+      [ngModel]="note()"
+      (ngModelChange)="note.set($event)"
+      rows="3"
+      maxlength="500"
+      placeholder="Bạn muốn chia sẻ thêm điều gì?"
+    ></textarea>
+  </label>
+
+  <p *ngIf="errorMessage()" class="error">{{ errorMessage() }}</p>
+
+  <button type="button" [disabled]="!canSubmit()" (click)="onSubmit()">
+    {{ submitting() ? 'Đang gửi...' : 'Gửi check-in' }}
+  </button>
+</section>
+
+<ng-template #loadingBlock>
+  <section class="checkin-page">
+    <p>Đang tải điểm check-in...</p>
+  </section>
+</ng-template>

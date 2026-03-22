@@ -1,0 +1,15 @@
+﻿@use 'variables' as *;
+
+@mixin card-base {
+  background: $color-card;
+  border: 1px solid rgba(47, 10, 10, 0.12);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-soft;
+}
+
+@mixin gradient-bg {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(140, 0, 1, 0.13), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(184, 58, 59, 0.1), transparent 40%),
+    linear-gradient(180deg, #fff7f7 0%, #f8ecec 100%);
+}

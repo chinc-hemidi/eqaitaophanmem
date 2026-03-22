@@ -1,0 +1,13 @@
+﻿<section class="stats-page">
+  <h1>Thống kê cảm xúc chi tiết</h1>
+
+  <article class="panel" *ngIf="summary$ | async as summary">
+    <div class="legend" *ngFor="let emotion of summary.emotions">
+      <span class="swatch" [style.background]="emotion.color"></span>
+      <div>
+        <strong>{{ emotion.name }}</strong>
+        <p>{{ emotion.count }} lượt · {{ emotion.percentage }}%</p>
+      </div>
+    </div>
+  </article>
+</section>

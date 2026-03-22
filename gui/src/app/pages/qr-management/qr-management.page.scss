@@ -1,0 +1,89 @@
+﻿@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.qr-page {
+  display: grid;
+  gap: 14px;
+  font-size: 0.88rem;
+
+  h1 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+}
+
+.panel {
+  @include card-base;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+
+  h2 {
+    font-size: 0.92rem;
+    margin: 0;
+  }
+}
+
+input,
+textarea {
+  border: 1px solid rgba(47, 10, 10, 0.2);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.8rem;
+}
+
+.icon-btn {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: $color-accent;
+  color: #fff;
+  cursor: pointer;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.icon-btn.is-off {
+  background: rgba(47, 10, 10, 0.5);
+}
+
+.point {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(47, 10, 10, 0.2);
+
+  strong {
+    font-size: 0.86rem;
+  }
+
+  p {
+    margin: 4px 0 0;
+    opacity: 0.7;
+    font-size: 0.74rem;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+img {
+  width: min(280px, 100%);
+}
+
+.error {
+  color: $color-warn;
+  font-size: 0.78rem;
+}

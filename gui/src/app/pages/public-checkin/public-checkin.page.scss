@@ -1,0 +1,48 @@
+﻿@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.checkin-page {
+  @include card-base;
+  max-width: 580px;
+  margin: 24px auto;
+  padding: $space-6;
+  display: grid;
+  gap: $space-4;
+
+  .subtitle {
+    margin: 0;
+    opacity: 0.7;
+  }
+}
+
+.emotion-grid {
+  display: grid;
+  gap: 10px;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 8px;
+  border: 1px solid rgba(47, 10, 10, 0.2);
+  border-radius: 6px;
+  padding: 12px;
+  resize: vertical;
+}
+
+button {
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  background: $color-accent;
+  color: white;
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+.error {
+  color: $color-warn;
+  margin: 0;
+}
