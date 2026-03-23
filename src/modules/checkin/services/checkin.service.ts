@@ -204,7 +204,7 @@ export class CheckinService {
   }
 
   private getCheckinContext(request: Request): CheckinContext {
-    const clientId = (request.headers['x-client-id'] as string | undefined)?.trim();
+    const clientId = this.extractClientId(request.headers);
     const userAgent = request.headers['user-agent'] ?? '';
     const ip = request.ip ?? request.socket.remoteAddress ?? 'unknown';
     const identity = clientId || `${ip}|${userAgent}|${this.configService.get('DB_NAME', 'app')}`;
@@ -212,6 +212,18 @@ export class CheckinService {
     return {
       clientHash: hashClientIdentity(identity),
     };
+  }
+
+  private extractClientId(headers: Request['headers']): string | null {
+    const raw = headers['x-client-id'];
+    const value = Array.isArray(raw) ? raw[0] : raw;
+    const normalized = value?.trim();
+
+    if (!normalized) {
+      return null;
+    }
+
+    return normalized.slice(0, 128);
   }
 
   private generatePointCode(name: string): string {
