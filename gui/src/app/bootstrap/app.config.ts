@@ -5,13 +5,19 @@ import { provideRouter } from '@angular/router';
 import { routes } from '../routing/app.routes';
 import { apiPrefixInterceptor } from '../core/interceptors/api-prefix.interceptor';
 import { apiErrorInterceptor } from '../core/interceptors/api-error.interceptor';
+import { clientIdInterceptor } from '../core/interceptors/client-id.interceptor';
 import { ngrokBypassInterceptor } from '../core/interceptors/ngrok-bypass.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
-      withInterceptors([apiPrefixInterceptor, ngrokBypassInterceptor, apiErrorInterceptor]),
+      withInterceptors([
+        apiPrefixInterceptor,
+        clientIdInterceptor,
+        ngrokBypassInterceptor,
+        apiErrorInterceptor,
+      ]),
     ),
     provideRouter(routes),
   ],
